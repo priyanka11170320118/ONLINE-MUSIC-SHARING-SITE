@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./bgcolor.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -24,7 +25,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="./index.php">
+            <a class="navbar-brand" href="#">
               <h3>
                 <i>Music Share</i>
               </h3>
@@ -33,7 +34,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
               <ul class="navbar-nav ml-8 mr-1 mt-2 mt-lg-0">
                 <li class="nav-item active">
-                  <a class="nav-link" href="./index.php">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="./home.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
                   <a class="nav-link" href="#">Users List </a>
