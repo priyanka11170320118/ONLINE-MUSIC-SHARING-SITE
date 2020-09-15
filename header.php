@@ -46,12 +46,46 @@
                 <li class="nav-item">
                   <a class="nav-link" href="./admin/index.php">ADMIN</a>
                 </li>
+                <!-- Log Out -->
+                <?php
                 
+                
+                  if (!empty($_SESSION['username'])) {
+
+                ?>
+
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="index.php?logout='1'">Log Out<span class="sr-only">(current)</span></a>
+                    </li>
+
+                <?php
+                   }
+                ?>
+                <!-- Log Out -->
+                </ul>
+
+
+                <ul class="navbar-nav text-right ml-auto mr-4 mt-2 mt-lg-0">
+              <li class="nav-item text-right">
+              <?php 
+                  if (!empty($loggeduser)) {
+
+
+              ?>
+              <span class="navbar-text">
+                  <!-- user_img -->
+                  <img src="<?php echo $loggeduserimg; ?>" class="img-fluid img-thumbnail" alt="<?php echo $loggeduser; ?>" style="width: 15% !important; height: 15% !important;" >
+                  <?php echo $loggeduser; ?>
+                
+              </span>
+            </li>
+            
+
+              <?php 
+                }
+              ?>
               </ul>
-              <form class="form-inline my-2 my-lg-0">
-               <!--  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-light my-2 my-sm-0" type="submit">Search</button> -->
-              </form>
             </div>
           </nav>
 

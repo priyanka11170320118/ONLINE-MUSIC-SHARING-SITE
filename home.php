@@ -1,10 +1,34 @@
+<?php 
+session_start();//Session Begin
+//VAriable
+$loggeduser="";
+$loggeduserimg="";
+//<!-- Log Out -->
+                if (isset($_GET['action'])) {
+                  if ($_GET['action']=='logout') {
+                    // session_destroy();
+                    unset($_SESSION['username']);
+                    unset($_SESSION['user_img']);
+                    header("location: index.php");
+                  }
+              }
+                //<!-- Log Out -->
+//Redirect to login
+if (!isset($_SESSION['username'])) {
+		header('location: index.php');
+	}
+
+$loggeduser=$_SESSION['username'];
+$loggeduserimg=$_SESSION['user_img'];
+ ?>
+
+
 
 <!--  Header Starts  -->
 <?php include 'header.php'; ?>
 <!--  Header Ends  -->
 
 <?php
-//session_start();
 error_reporting(0);
 //Connect the Dbase
 //$con= mysqli_connect("localhost","root","","musicshare");
@@ -13,7 +37,7 @@ error_reporting(0);
 include 'db.php';////Connect the Dbase $con
 //
 
-
+//https://github.com/priyanka11170320118/ONLINE-MUSIC-SHARING-SITE
 
 //Delete Songs
 if (isset($_GET['action'])) {
@@ -160,6 +184,8 @@ if(isset($_POST['submit']))
 									<!-- <input type="file" name="song_link" placeholder="Paste The Link Here.."  class="form-control mr-sm-2"> -->
 									<input type="text" name="song_link" placeholder="Paste The Link Here.."  class="form-control mr-sm-2">
 						      		<input type="text" name="song_name" placeholder="Name of Song"  class="form-control mr-sm-2">
+						      	</div>
+						      	<div class="form-inline form-row p-2">
 						      		<input type="text" name="song_singer" placeholder="Singer"  class="form-control mr-sm-2">
 						      		<input type="text" name="song_album" placeholder="Album"  class="form-control mr-sm-2">
 								</div>
@@ -217,12 +243,12 @@ if(isset($_POST['submit']))
 </div>
 
 	<!-- Empty row -->
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col-md-12">
 			<br>
 			<br>
 		</div>
-	</div>
+	</div> -->
 	<!-- Empty row -->
 
 <!-- Music List -->
@@ -302,15 +328,34 @@ if(isset($_POST['submit']))
                                                   <tr>
                                                     <th scope="row"><?php echo $num; ?></th>
                                                     <th scope="row"><?php echo $value['inv_cartno']; ?></th>
-                                                    <td><a href ="home.php?action=play&link=<?php echo $value['song_link']; ?>#play"><span class="badge-danger">  PLAY  </span></a></td>
+                                                    <td>
+                                                    	<a href ="home.php?action=play&link=<?php echo $value['song_link']; ?>#play"><span class="btn btn-lg btn-outline-success">  PLAY  </span>
+                                                    	</a>
+                                                    </td>
 
-                                                    <td><?php echo $value['song_name']; ?></td>
-                                                    <td><?php echo $value['song_singer']; ?> BDT</td>
-                                                    <td><?php echo $value['song_album']; ?></td>
-                                                    <td><?php echo ($value['song_langauge']);?></td>
-                                                    <td><?php echo ($value['song_type']);?></td>
-                                                    <td><?php echo ($value['song_des']);?></td>
-                                                    <td><a href ="home.php?action=delete&id=<?php echo $value['song_id']; ?>"><span class="badge-danger" >  DELETE  </span></a></td>
+                                                    <td>
+                                                    	<p><b><em>SONG     : </em></b><?php echo $value['song_name']; ?></p>
+                                                    	<p><b><em>Singer   : </em></b><?php echo $value['song_singer']; ?></p>
+                                                    	<p><b><em>Album    : </em></b><?php echo $value['song_album']; ?></p>
+                                                    	<p><b><em>Type     : </em></b><?php echo $value['song_type'];?></p>
+                                                    	<p><b><em>Language : </em></b><?php echo $value['song_langauge'];?></p>
+                                                    	<p><b><em>Description : </em></b><?php echo ($value['song_des']);?></td></p>
+                                                    </td>
+                                                    <!-- <td><?php echo ($value['song_des']);?></td> -->
+                                                    <td>Uploaded by <?php echo $value['username'];?></td>
+                                                    <td>
+
+                                                    	<?php 
+                                                    	if ($loggeduser== $value['username']) {
+                                                    		
+                                                    	 ?>
+                                                    		<a href ="home.php?action=delete&id=<?php echo $value['song_id']; ?>"><span class="badge-danger" >  DELETE  </span></a>
+
+                                                    	<?php 
+                                                    	 }
+                                                    	?>
+
+                                                    </td>
                                                   </tr>
                                                
 

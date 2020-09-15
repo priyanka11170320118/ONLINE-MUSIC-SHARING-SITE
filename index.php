@@ -1,16 +1,22 @@
 <?php 
-	// session_start(); 
+ session_start();
+// variable declaration
+	$username = "";
+	$email    = "";
+	$errors = array();
+	$loggeduser="";
+	$loggeduserimg=""; 
+	//$_SESSION['success'] = ""; 
 
-	// if (!isset($_SESSION['username'])) {
-	// 	$_SESSION['msg'] = "You must log in first";
-	// 	header('location: login.php');
-	// }
 
-	// if (isset($_GET['logout'])) {
-	// 	session_destroy();
-	// 	unset($_SESSION['username']);
-	// 	header("location: login.php");
-	// }
+//LOG OUT
+		if (isset($_GET['logout'])) {
+		session_destroy();
+		unset($_SESSION['username']);
+		unset($_SESSION['user_img']);
+		header("location: index.php");
+	}
+
 
 ?>
 
@@ -23,52 +29,81 @@ include 'db.php';////Connect the Dbase $con
 	//------------------------------- REGISTER ---------------------------
 	if (isset($_POST['register'])) {
 		// receive all input values from the form
-		$username = mysqli_real_escape_string($con, $_POST['username']);
-		$user_fullname = mysqli_real_escape_string($con, $_POST['user_fullname']);
-		$user_email = mysqli_real_escape_string($con, $_POST['user_email']);
-		$user_age = mysqli_real_escape_string($con, $_POST['user_age']);
-		$user_gender = mysqli_real_escape_string($con, $_POST['user_gender']);
-		$password_1 = mysqli_real_escape_string($con, $_POST['password_1']);
-		$password_2 = mysqli_real_escape_string($con, $_POST['password_2']);
+		$username = $_POST['username'];
+		$user_fullname = $_POST['user_fullname'];
+		$user_email = $_POST['user_email'];
+		$user_age = $_POST['user_age'];
+		$user_gender = $_POST['user_gender'];
+		$password_1 = $_POST['password_1'];
+		$password_2 = $_POST['password_2'];
 
 		//
 		if ($password_1 != $password_2) {
-			array_push($errors, "The two passwords do not match");
+			echo "The two passwords do not match";
+			
 		}
 
-
-				//code for image uploading
+		$password = md5($password_1);//encrypt the password before saving in the database
+		//code for image uploading
 			if($_FILES['user_img']['name'])
 			{
-			move_uploaded_file($_FILES['user_img']['tmp_name'], "../files/".$_FILES['user_img']['name']);
-			$item_img="./files/".$_FILES['user_img']['name'];
+			move_uploaded_file($_FILES['user_img']['tmp_name'], "./files/".$_FILES['user_img']['name']);
+			$user_img="./files/".$_FILES['user_img']['name'];
 			}
-
 		
-			$password = md5($password_1);//encrypt the password before saving in the database
 			//<!-- INSERT INTO `users`(`user_id`, `username`, `password`, `user_fullname`, `user_email`, `user_age`, `user_gender`, `user_img`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8]) -->
 			$query = "INSERT INTO users (username, password, user_fullname,user_email,user_age,user_gender,user_img) 
-					  VALUES('$username', '$password', '$user_fullname', '$user_email', '$user_age', '$user_gender', '$user_img)";
+					  VALUES('$username', '$password', '$user_fullname', '$user_email', '$user_age', '$user_gender', '$user_img')";
 			mysqli_query($con, $query);
 
 			if(mysqli_query($con, $query))
 				{
-				echo "<script type='text/javascript'>alert('Inserted successfully..!')</script>";
 				$_SESSION['username'] = $username;
-				$_SESSION['success'] = "You are now logged in";
-				// header('location: home.php');
+				$_SESSION['user_img'] = $user_img;
+				echo "<script type='text/javascript'>alert('Inserted successfully..! You are now logged in now.')</script>";
+				header('location: home.php');
 				}
 				else {
 					echo "<script type='text/javascript'>alert('NOT inserted! ! ! Error!!')</script>";
 				}
 
-			
-		
-
 	}
 	//------------------------------- REGISTER ---------------------------
 
+	// -------------------------------LOGIN USER---------------------------
+	if (isset($_POST['login'])) {
+		$username = mysqli_real_escape_string($con, $_POST['username']);
+		$password = mysqli_real_escape_string($con, $_POST['password']);
 
+
+		// if (count($errors) == 0) {
+			$password = md5($password);
+			$query = "SELECT*FROM users WHERE username='$username' AND password='$password'";
+			$results = mysqli_query($con, $query);
+
+			if(mysqli_query($con, $query))
+				{
+				echo "<script type='text/javascript'>alert('You are now logged in successfully..!')</script>";
+				$_SESSION['username'] = $username;
+				$_SESSION['user_img'] = $user_img;
+				// $_SESSION['success'] = "You are now logged in";
+				header('location: home.php');
+				}
+				else {
+					echo "<script type='text/javascript'>alert('You entered wrong username/password combination! ! ! Error!!')</script>";
+				}
+
+		// 	if (mysqli_num_rows($results) == 1) {
+		// 		echo "<script type='text/javascript'>alert('You are now logged in successfully..!')</script>";
+		// 		// $_SESSION['username'] = $username;
+		// 		// $_SESSION['success'] = "You are now logged in";
+		// 		// header('location: home.php');
+		// 	}else {
+		// 		array_push($errors, "You entered wrong username/password combination");
+		// 	}
+		// // }
+	}
+	// -------------------------------LOGIN USER---------------------------
 
 
 
@@ -151,7 +186,7 @@ include 'db.php';////Connect the Dbase $con
 								</div>
 						      	<div class="form-row p-2">
 						      		<label>Upload Your Profile Image</label>
-						      		<input type="file" name="song_des"  class="form-control form-control-lg ">
+						      		<input type="file" name="user_img"  class="form-control form-control-lg ">
 								</div>
 
 								<div class="form-row m-1 p-2">
@@ -179,12 +214,12 @@ include 'db.php';////Connect the Dbase $con
 									<!-- INSERT INTO `users`(`user_id`, `username`, `password`, `user_fullname`, `user_email`, `user_age`, `user_gender`, `user_img`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8]) -->
 										
 								<div class="form form-group p-2">
-						      		<input type="text" name="username" placeholder="Username"  class="form-control form-control-lg mr-sm-2">
+						      		<input type="text" name="username" placeholder="Username"  class="form-control form-control-lg mr-sm-4">
 						      		
 								</div>
 								
 								<div class="form form-group p-2">
-									<input type="text" name="password" placeholder="Password"  class="form-control form-control-lg mr-sm-2">
+									<input type="text" name="password" placeholder="Password"  class="form-control form-control-lg mr-sm-4">
 								</div>
 						      	
 
