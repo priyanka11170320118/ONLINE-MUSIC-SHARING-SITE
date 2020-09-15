@@ -168,7 +168,7 @@ if(isset($_POST['submit']))
 						?>
 				<!-- -----------------------------------Audio File Upload code ---------------------------------------------- -->
 					<div class="row">
-						<div class="col-md-7 offset-md-3">
+						<div class="col-md-5 " style="margin-left: 20px;">
 							
 							<!-- ----------------------------------------- -->
 							
@@ -211,7 +211,7 @@ if(isset($_POST['submit']))
 									  <option>Bollywood</option>
 									  <option>Others</option>
 									</select>
-							      	<input type="text" name="username" placeholder="User name"  class="form-control mr-sm-2">
+							      	<input type="hidden" name="username" placeholder="User name" value="<?php echo $loggeduser; ?>"  class="form-control mr-sm-2">
 						      	</div>
 						      	
 						      	<div class="form-row p-2">
@@ -228,12 +228,47 @@ if(isset($_POST['submit']))
 						    
 							<!-- -------------------------------------------- -->
 						</div>
+
+
+
+			<div class="col-md-6" id="play" >
+			<!-- ========================================Video Player=================================================== -->
+							
+							<?php 
+							//Play Button
+							$song_play_link="";
+							if (isset($_GET['action'])) {
+							    if ($_GET['action']=='play') {
+							        // $song_id=$_GET['song_id'];
+							        $song_play_link=$_GET['link'];
+							        $song_play_name=$_GET['name'];
+
+							        // echo $song_play_link;
+							    
+							
+							 ?>
+									<iframe width="100%" height="380" src="https://www.youtube.com/embed/<?php echo $song_play_link;?>?controls=1"></iframe>
+									<p><h5 class="text-light"><?php echo $song_play_name; ?></h5></p>
+									
+							<?php 
+								
+									}
+								}else{
+							 ?>
+									<iframe width="100%" height="380" src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=1"></iframe>
+							<?php
+								}
+							 ?>
+			<!-- ========================================Video Player=================================================== -->
+					</div>
+
+
+
+						<!-- -------------- -->
 					</div>
 			  
 
-			  <p class="lead">
-			    <!-- <a class="btn btn-danger btn-lg" href="#" role="button">Learn more</a> -->
-			  </p>
+			  
 			</div>
 
 	</div>	
@@ -252,39 +287,14 @@ if(isset($_POST['submit']))
 	<!-- Empty row -->
 
 <!-- Music List -->
-<div class="row h-50" id="play">
-		<div class="col-md-6" >
-			<!-- ========================================Video Player=================================================== -->
-				
-				<?php 
-				//Play Button
-				$song_play_link="";
-				if (isset($_GET['action'])) {
-				    if ($_GET['action']=='play') {
-				        // $song_id=$_GET['song_id'];
-				        $song_play_link=$_GET['link'];
-				        echo $song_play_link;
-				    
-				
-				 ?>
-						<iframe width="100%" height="380" src="https://www.youtube.com/embed/<?php echo $song_play_link;?>?controls=1"></iframe>
-				<?php 
-					
-						}
-					}else{
-				 ?>
-						<iframe width="100%" height="380" src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=1"></iframe>
-				<?php
-					}
-				 ?>
-			<!-- ========================================Video Player=================================================== -->
-		</div>
+<div class="row h-50 m-2" >
+		
 
-		<div class="col-md-6">
+		<div class="col-md-12">
 			 <!-- ---------------------------------------- -->
 
 			 <div class="row">
-			 	<div class="col-md-10" 
+			 	<div class="col-md-10 offset-md-1" 
 			 	style="
 		      background: #ff5db1;/*Old browsers*/
 		      background: -moz-linear-gradient(top, #ff5db1 0%, #ef017c 100%);/*FF3.6-15*/
@@ -293,14 +303,14 @@ if(isset($_POST['submit']))
 		      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5db1',endColorstr='#ef017c',GradientType=0);/* IE6-9*/
 		      "		
 				>
-			 		<h3 class="text-white">
+			 		<h3 class="text-white" id="music">
 			 			Music List
 			 		</h3>
 			 	</div>
 			 </div>
 
 			 <div class="row ">
-			 	<div class="col-md-10">
+			 	<div class="col-md-10 offset-md-1">
 			 		<!-- ---------------------------Your Songs Table------------------------------------- -->
 			 		
 			 			<div class="alert alert-danger">
@@ -327,9 +337,8 @@ if(isset($_POST['submit']))
                                                 <tbody>
                                                   <tr>
                                                     <th scope="row"><?php echo $num; ?></th>
-                                                    <th scope="row"><?php echo $value['inv_cartno']; ?></th>
                                                     <td>
-                                                    	<a href ="home.php?action=play&link=<?php echo $value['song_link']; ?>#play"><span class="btn btn-lg btn-outline-success">  PLAY  </span>
+                                                    	<a href ="home.php?action=play&link=<?php echo $value['song_link']; ?>&name=<?php echo $value['song_name'];?>#play"><span class="btn btn-lg btn-outline-success">PLAY</span>
                                                     	</a>
                                                     </td>
 
@@ -341,17 +350,19 @@ if(isset($_POST['submit']))
                                                     	<p><b><em>Language : </em></b><?php echo $value['song_langauge'];?></p>
                                                     	<p><b><em>Description : </em></b><?php echo ($value['song_des']);?></td></p>
                                                     </td>
-                                                    <!-- <td><?php echo ($value['song_des']);?></td> -->
-                                                    <td>Uploaded by <?php echo $value['username'];?></td>
+                                                    <!-- <td><?php //echo ($value['song_des']);?></td> -->
+                                                    <td>Uploaded by <b><em><?php echo $value['username'];?></em></b></td>
                                                     <td>
 
                                                     	<?php 
                                                     	if ($loggeduser== $value['username']) {
                                                     		
                                                     	 ?>
-                                                    		<a href ="home.php?action=delete&id=<?php echo $value['song_id']; ?>"><span class="badge-danger" >  DELETE  </span></a>
+                                                    		<a href ="home.php?action=delete&id=<?php echo $value['song_id']; ?>"><span class="btn btn-lg btn-outline-danger" >DELETE</span></a>
 
                                                     	<?php 
+                                                    	 }else{
+                                                    	 	echo "You can only delete your music.";
                                                     	 }
                                                     	?>
 

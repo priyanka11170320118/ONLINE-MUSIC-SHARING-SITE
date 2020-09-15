@@ -148,7 +148,7 @@ include 'db.php';////Connect the Dbase $con
 							<div class="row m-1 p-1">
 							<form class="form" method = "POST" enctype = "multipart/form-data">
 								
-								<div class="form-group p-2">
+								<div class="form-group p-2" id="reg">
 									<h5 class="text-white text-center">Register here</h5>
 
 								</div>	

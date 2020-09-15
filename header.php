@@ -38,14 +38,12 @@
                   <a class="nav-link" href="./home.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">Users List </a>
+                  <a class="nav-link" href="./home.php#music">Music List </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="./registerdonor.php">Register</a>
+                  <a class="nav-link" href="./index.php#reg">Register</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="./admin/index.php">ADMIN</a>
-                </li>
+                
                 <!-- Log Out -->
                 <?php
                 
