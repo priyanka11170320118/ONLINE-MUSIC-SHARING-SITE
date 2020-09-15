@@ -1,13 +1,13 @@
 
 <!-- --------------------------------------Footer ----------------------------------------- -->
-   </div>     <!-- =========================================
-                          Footer
-        ============================================ -->
-         <!--  <div class="row"> -->
-            <div class="bg-dark p-2 text-center" style="margin-top: 2px;"><!-- fixed-bottom -->
-            <a class="text-white text-center" href="https://github.com/priyanka11170320118/ONLINE-MUSIC-SHARING-SITE"> All rights reserved &copy; by Music Share by PRIYANKA ID-118</a>
+   </div>     
+
+<!-- ========================================= Footer ============================================ -->
+          <div class="row bg-dark">
+            <div class="col-md-12 p-2" style="margin-top: 1px;">
+                <a class="text-white text-center" href="https://github.com/priyanka11170320118/ONLINE-MUSIC-SHARING-SITE"> All rights reserved &copy; by Music Share by PRIYANKA ID-118</a>
             </div>
-          <!-- </div> -->
+          </div>
 
     <!-- Optional JavaScript -->
    <script src="./js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
